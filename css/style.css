@@ -1,0 +1,49 @@
+#box{
+    border-style: double;
+    width: 500px;
+    height: 400px;
+}
+
+#nameContainer{
+    background-color: bisque;
+    margin:unset;
+    padding:2%;
+}
+
+#chatContainer{
+    height: 72%;
+    overflow-y: scroll;
+}
+
+.messageContainer{
+    border-bottom-style: solid;
+    margin : 2%;
+    display: grid;
+}
+
+.messageInfo{
+    display: inline-flex;
+}
+
+.name{
+    margin-left: auto;
+    font-weight: bold;
+}
+.time{
+    color : gray;
+}
+
+.name, .time, .message{
+    margin-top: 0%;
+    margin-bottom: 1%;
+}
+
+#inputContainer{
+    background-color: gainsboro;
+    margin:unset;
+    padding:2%;
+}
+
+#messageForm{
+    margin : 2%;
+}

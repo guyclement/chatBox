@@ -1,0 +1,76 @@
+<script>
+    function fillChat(){
+        document.getElementById("chatContainer").innerHTML = "";
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET","recuperer.php",true);
+        xhr.onreadystatechange = function(){
+            //Traitement seulement si on a tout reçu et que la réponse est ok
+            if(xhr.readyState == 4 && xhr.status == 200){
+                let objJson = JSON.parse(xhr.responseText);
+                for (let i = 0; i<10 ; i++){
+
+                    var time_diff = Math.floor(Date.now() / 1000) - objJson[9-i].dateEnvoi;
+                    var days_Diff = Math.round(time_diff / 60);
+                    let timeText = "Il y a "
+                    if (days_Diff > 60){
+                        timeText +=  Math.round(days_Diff/60)+"heure"
+                    }else{
+                        timeText += days_Diff+"min"
+                    }
+
+                    let message = '<div class="messageContainer"><div class="messageInfo"><p class="time">'+timeText+'</p><p class="name">'+ objJson[9-i].auteur+'</p></div><p class="message">'+ objJson[9-i].contenu +'</p></div>';
+                    document.getElementById("chatContainer").innerHTML += message;
+                    var objDiv = document.getElementById("chatContainer");
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                }
+            }
+        }
+        xhr.send(null);
+    }
+
+    function sendMessage(){
+        let value = document.getElementById('messageInput').value;
+        document.getElementById('messageInput').value = "";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET","enregistrer.php?auteur=Clément&contenu=" + value,true);
+
+        xhr.onreadystatechange = function(){
+            //Traitement seulement si on a tout reçu et que la réponse est ok
+            if(xhr.readyState == 4 && xhr.status == 200){
+                fillChat()
+            }
+        } 
+        xhr.send(null);
+        
+    }
+
+    window.onload = (event) => {
+        fillChat();
+        let truc = setInterval(fillChat, 2000);
+    };
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatBox</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Ceci est une chatbox</h1>
+    <div id="box">
+        <div id="nameContainer">
+            <p>Guyon Clément</p>
+        </div>
+        <div id="chatContainer">
+        </div>
+        <div id="inputContainer">
+            <input type="text" maxlength="100" placeholder="Entrer un message" name="message" id="messageInput"></input>
+            <input type='button' value='envoyer' onclick='sendMessage()' />
+        </div>
+    </div>
+
+    <p id="zone" ></p>
+</body>
+</html>
