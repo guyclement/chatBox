@@ -45,6 +45,13 @@
         
     }
 
+    function logout() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET','logout.php', true);
+        document.location.href="loginPage.php";
+        xmlhttp.send(null);
+    }
+
     window.onload = (event) => {
         fillChat();
         let truc = setInterval(fillChat, 2000);
@@ -61,13 +68,11 @@
     <?php
         session_start();
         if (isset($_SESSION['name'])) {
-            echo $_SESSION['name']." est connecté";
             $userName = $_SESSION['name'];
         }else {
             header("loginPage.php");
         }
     ?>
-    <h1>Ceci est une chatbox</h1>
     <div id="box">
         <div id="nameContainer">
             <p><?php echo $userName;?></p>
@@ -76,7 +81,8 @@
         </div>
         <div id="inputContainer">
             <input type="text" maxlength="100" placeholder="Entrer un message" name="message" id="messageInput"></input>
-            <input type='button' value='envoyer' onclick='sendMessage("<?php echo $userName?>")' />
+            <input type='button' value='Envoyer' onclick='sendMessage("<?php echo $userName?>")' />
+            <input type="button" value="Déconnexion" onclick="logout()">
         </div>
     </div>
 
