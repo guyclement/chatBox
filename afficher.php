@@ -28,12 +28,12 @@
         xhr.send(null);
     }
 
-    function sendMessage(){
+    function sendMessage(username){
         let value = document.getElementById('messageInput').value;
         document.getElementById('messageInput').value = "";
 
         var xhr = new XMLHttpRequest();
-        xhr.open("GET","enregistrer.php?auteur=Clément&contenu=" + value,true);
+        xhr.open("GET","enregistrer.php?auteur="+username+"&contenu=" + value,true);
 
         xhr.onreadystatechange = function(){
             //Traitement seulement si on a tout reçu et que la réponse est ok
@@ -58,16 +58,25 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <?php
+        session_start();
+        if (isset($_SESSION['name'])) {
+            echo $_SESSION['name']." est connecté";
+            $userName = $_SESSION['name'];
+        }else {
+            header("loginPage.php");
+        }
+    ?>
     <h1>Ceci est une chatbox</h1>
     <div id="box">
         <div id="nameContainer">
-            <p>Guyon Clément</p>
+            <p><?php echo $userName;?></p>
         </div>
         <div id="chatContainer">
         </div>
         <div id="inputContainer">
             <input type="text" maxlength="100" placeholder="Entrer un message" name="message" id="messageInput"></input>
-            <input type='button' value='envoyer' onclick='sendMessage()' />
+            <input type='button' value='envoyer' onclick='sendMessage("<?php echo $userName?>")' />
         </div>
     </div>
 
