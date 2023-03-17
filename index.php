@@ -1,17 +1,3 @@
-<script>
-    function accessPHP(){
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET","recuperer.php?",true);
-
-        xhr.onreadystatechange = function(){
-            //Traitement seulement si on a tout reçu et que la réponse est ok
-            if(xhr.readyState == 4 && xhr.status == 200){
-            //alert(xhr.responseText);
-            document.getElementById("zone").innerHTML = xhr.responseText;
-            }
-        } 
-        xhr.send(null);
-    }
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,9 +10,11 @@
     <?php
         session_start();
         if (isset($_SESSION['name'])) {
-            echo $_SESSION['name']." est connecté";
+            header("afficher.php");
+            exit();
         }else {
             header("loginPage.php");
+            exit();
         }
     ?>
 </body>

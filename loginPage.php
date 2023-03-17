@@ -7,7 +7,7 @@
 <body>
     <form action="login.php">
         <label for="name">Saisissez votre nom</label>
-        <input type="text" name="name">
+        <input type="text" name="name" maxlength="30">
         <input type="submit" value="Valider">
     </form>
 </body>

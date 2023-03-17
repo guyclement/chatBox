@@ -10,12 +10,16 @@
                 for (let i = 0; i<10 ; i++){
 
                     var time_diff = Math.floor(Date.now() / 1000) - objJson[9-i].dateEnvoi;
-                    var days_Diff = Math.round(time_diff / 60);
-                    let timeText = "Il y a "
-                    if (days_Diff > 60){
-                        timeText +=  Math.round(days_Diff/60)+"heure"
+                    var minutes_Diff = Math.round(time_diff / 60);
+                    let timeText = "Il y a ";
+                    if (minutes_Diff > 10080){
+                        timeText +=  Math.round(((minutes_Diff/60)/24)/7)+"sm"
+                    }else if (minutes_Diff>1440){
+                        timeText +=  Math.round((minutes_Diff/60)/24)+"j"
+                    }else if (minutes_Diff > 60){
+                        timeText +=  Math.round(minutes_Diff/60)+"h"
                     }else{
-                        timeText += days_Diff+"min"
+                        timeText += minutes_Diff+"min"
                     }
 
                     let message = '<div class="messageContainer"><div class="messageInfo"><p class="time">'+timeText+'</p><p class="name">'+ objJson[9-i].auteur+'</p></div><p class="message">'+ objJson[9-i].contenu +'</p></div>';
