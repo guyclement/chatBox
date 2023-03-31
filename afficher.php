@@ -74,7 +74,7 @@
         if (isset($_SESSION['name'])) {
             $userName = $_SESSION['name'];
         }else {
-            header("loginPage.php");
+            header("Location: loginPage.php");
         }
     ?>
     <div id="box">
